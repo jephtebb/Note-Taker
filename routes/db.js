@@ -19,7 +19,14 @@ app.get("/api/notes", (req, res) => res.sendFile(path.join(__dirname, "../db/db.
      fs.writeFileSync("./db/db.json",JSON.stringify(existedNote))
      res.json(existedNote)
  })
-
+//Receive a query parameter containing the id of a note to delete.
+app.delete("/api/notes/:id", (req, res) => {
+    let deletedNote = req.params.id
+    let existedNote =JSON.parse(fs.readFileSync(path.join(__dirname,"../db/db.json"),"utf-8"))
+    const incomingNote =existedNote.filter(existedNote=>existedNote.id != deletedNote)
+    fs.writeFileSync("./db/db.json",JSON.stringify(incomingNote))
+    res.send(incomingNote)
+})
 }
 module.exports = dbApi;
 
