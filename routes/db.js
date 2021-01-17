@@ -23,6 +23,7 @@ app.get("/api/notes", (req, res) => res.sendFile(path.join(__dirname, "../db/db.
 app.delete("/api/notes/:id", (req, res) => {
     let deletedNote = req.params.id
     let existedNote =JSON.parse(fs.readFileSync(path.join(__dirname,"../db/db.json"),"utf-8"))
+    //filter through the json file to remove the deleted one
     const incomingNote =existedNote.filter(existedNote=>existedNote.id != deletedNote)
     fs.writeFileSync("./db/db.json",JSON.stringify(incomingNote))
     res.send(incomingNote)
