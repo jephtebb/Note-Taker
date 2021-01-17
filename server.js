@@ -1,13 +1,16 @@
 const express = require("express");
-const fs = require("fs");
-const path = require("path");
-const PORT = process.env.PORT || 3001;
 const app = express();
 
+const PORT = process.env.PORT || 3001;
 
-app.get("/",(req,res)=>{
+app.use(express.static(__dirname + '/public'));
 
-})
+//Body parsor
+app.use(express.urlencoded({ extended: true }));
+app.use(express.json())
+
+require("./routes/api")(app);
+require("./routes/view")(app);
 
 app.listen(PORT,()=>{
     console.log(`App is running on port ${PORT}`)
